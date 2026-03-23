@@ -1,4 +1,6 @@
-const express = require('express');
+const cors = require('cors');
+app.use(cors()); // Bütün müraciətlərə icazə veririk
+e('express');
 const cors = require('cors');
 const pool = require('./db');
 const app = express();

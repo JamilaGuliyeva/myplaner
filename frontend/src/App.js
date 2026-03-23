@@ -8,11 +8,11 @@ function App() {
   const [fullReport, setFullReport] = useState({ weekly: [], monthly: [], yearly: [] });
 
   const loadData = async () => {
-    const res = await fetch(`http://localhost:5000/tasks?date=${selectedDate}`);
+    const res = await fetch(`https://myplaner-hy5e.onrender.com/tasks?date=${selectedDate}`);
     const data = await res.json();
     setTasks(Array.isArray(data) ? data : []);
 
-    const repRes = await fetch('http://localhost:5000/full-report');
+    const repRes = await fetch('https://myplaner-hy5e.onrender.com/full-report');
     const repData = await repRes.json();
     setFullReport(repData);
   };
@@ -20,25 +20,23 @@ function App() {
   useEffect(() => { loadData(); }, [selectedDate]);
 
   const updateStatus = async (id, status) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    await fetch(`https://myplaner-hy5e.onrender.com/tasks/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
     });
     loadData();
   };
-
-  const addTask = async (e) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-    await fetch('http://localhost:5000/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, date: selectedDate })
-    });
-    setTitle('');
-    loadData();
-  };
+const addTask = async () => {
+  if (!title) return;
+  await fetch('https://myplaner-hy5e.onrender.com/tasks', { // Linki bura da yaz!
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, date: selectedDate })
+  });
+  setTitle('');
+  loadData(); // Siyahını yeniləyirik
+};
 
   // Günlük filtr
   const done = tasks.filter(t => t.status === 'done');
